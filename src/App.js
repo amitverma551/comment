@@ -1,25 +1,24 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {Fragment} from 'react';
 import './App.css';
+import Header from './containers/Header';
+import WriteComment from './containers/WriteComment';
+import MessageListing from './containers/MessageListing';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Fragment>
+      <div className="cm_comment-wrapper cm_open">
+        <div className="cm_first-comment">
+          <Header/>
+          <WriteComment/>
+        </div>
+        <div className="cm_list cm_m_scroll">
+          <ul>
+            <MessageListing/>
+          </ul>
+         </div>
+       </div>
+    </Fragment>
   );
 }
 
