@@ -571,7 +571,7 @@
             text-transform: uppercase;
             border-radius: 3px;
         }
-        .cmt-active .cm_msg-submit{
+        .cmt-active.cm_msg-submit{
             background-color: #d72027;
         }
         
@@ -661,6 +661,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
         }
         .cm_login-fb svg, .cm_login-g svg{fill:#fff; margin-right: 6px;}
         .cm_login-g .cm_login-icon{
