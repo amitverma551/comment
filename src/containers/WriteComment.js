@@ -1,7 +1,25 @@
-import React, {Fragment} from 'react';
+import React, {Fragment, useState, useEffect} from 'react';
 import UserInputComment from '../components/UserInputComment';
+import UserLogin from '../components/UserLogin';
+import Cookies from 'universal-cookie';
 
-const WriteComment = ()=>{
+const WriteComment = React.memo(props =>{
+    const [isloggedIn, setIsloggedIn] = useState(false);
+    const [userName, setUserName] = useState('');
+    const [showLogin, setshowLogin] = useState(false);
+    const cookies = new Cookies();
+
+    const checkLogin = (isLogin) =>{
+        setIsloggedIn(isLogin.isLoggedIn)
+        setUserName(isLogin.name)
+        console.log(isLogin)
+     }
+     console.log(userName, 'username')
+
+    const showLoginForm = () => {
+        setshowLogin(true);
+    }
+
     return (
         <Fragment>
             <div className="cm_write-comment">
@@ -35,10 +53,15 @@ const WriteComment = ()=>{
                     </div>
                     <div className="cm_error-msg">Please Login to post your comment</div>
                 </div>
-                <UserInputComment />
+                <UserInputComment showLoginForm={showLoginForm} showLoginMsg={isloggedIn} userName={userName} />
+                {
+                    showLogin && !isloggedIn && cookies.get('userId') == undefined ? <UserLogin checkUserLogin={checkLogin} />:
+                    null
+                }
+                
             </div>
         </Fragment>
     )
-}
+})
 
 export default WriteComment;

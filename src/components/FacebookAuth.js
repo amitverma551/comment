@@ -23,14 +23,14 @@ const FacebookAuth = props =>{
       const componentClicked = () =>{
         console.log('clicked');
       }
-
-      // props.checkUserLogin({
-      //   isLoggedIn,
-      //   userId,
-      //   userName,
-      //   email,
-      //   picture
-      // });
+      
+      props.checkUserLogin({
+        isLoggedIn,
+        userId,
+        userName,
+        email,
+        picture
+      });
 
       return(
         <FacebookLogin

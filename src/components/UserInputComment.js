@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import UserLogin from '../components/UserLogin';
 import Cookies from 'universal-cookie';
 
 const UserInputComment = props =>{
@@ -7,9 +6,6 @@ const UserInputComment = props =>{
    const [inputMsgState, setInputMsgState] = useState('');
    const [errorMsgState, setErrorMsgState] = useState('');
    const [counterState, setCounterState] = useState(0);
-   const [showLogin, setshowLogin] = useState(true);
-   const [isloggedIn, setIsloggedIn] = useState(false);
-   const [userName, setUserName] = useState('');
 
    let errContent;
 
@@ -17,9 +13,10 @@ const UserInputComment = props =>{
       e.preventDefault();
       if(cookies.get('userId') == undefined){
          setErrorMsgState('Please Login First to Post your Message');
-         setshowLogin(true)
+         props.showLoginForm();
       }
    }
+
    const inputHandle = (e) => {
       setInputMsgState(e.target.value);
       const inputVal = e.target.value.length;
@@ -32,12 +29,7 @@ const UserInputComment = props =>{
       });
    }
 
-   const checkLogin = (isLogin) =>{
-      setIsloggedIn(isLogin.isLoggedIn)
-      setUserName(isLogin.name)
-   }
-
-   if(errorMsgState && !isloggedIn){
+   if(errorMsgState !="" && !props.showLoginMsg){
       errContent = <div className="cm_post-error">{errorMsgState}</div>
    }
 
@@ -45,11 +37,11 @@ const UserInputComment = props =>{
     <div className="cm_login-comment">
     <div className="cm_post-comment">
        {
-          isloggedIn ? (<div className="cm_Uname-InComment">
+          (props.showLoginMsg || cookies.get('userId') != undefined) ? (<div className="cm_Uname-InComment">
                <div className="cm_user_name">
                   <div className="cm_first-letter" style={{backgroundColor: "#ffe1b7"}}>s
                </div>
-               <div className="cm_full-name">{userName}</div>
+               <div className="cm_full-name">{props.userName && props.userName}</div>
             </div>
           </div>):
          null
@@ -62,15 +54,10 @@ const UserInputComment = props =>{
             <span className="cm_char">{counterState}</span>
             (Characters)
             </div>
-            <button className={(cookies.get('userId') != undefined || isloggedIn) ? 'cm_msg-submit cmt-active' : 'cm_msg-submit' }>Post</button>
+            <button className={(props.showLoginMsg || cookies.get('userId') != undefined) ? 'cm_msg-submit cmt-active' : 'cm_msg-submit' }>Post</button>
         </form>
     </div>
        {errContent}
-       <UserLogin />
-       {/* {   (showLogin && (!isloggedIn || cookies.get('userId') != undefined)) ? 
-           <UserLogin checkUserLogin={checkLogin} />:
-           null
-       } */}
     </div>
   )
 }
