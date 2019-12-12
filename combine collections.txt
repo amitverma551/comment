@@ -1,0 +1,8 @@
+db.comments.aggregate([{
+    $lookup: {
+            from: "users",
+            localField: "userId",
+            foreignField: "userId",
+            as: "userDetail"
+        }
+}]).pretty()
