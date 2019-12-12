@@ -1,37 +1,40 @@
-import React, {useState} from 'react';
+import React, {useEffect} from 'react';
 import FacebookLogin from 'react-facebook-login/dist/facebook-login-render-props';
 import Cookies from 'universal-cookie';
 
 const FacebookAuth = props =>{
-  console.log("facebook Comp")
-
   const cookies = new Cookies();
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [userId, setUserId] = useState('');
-  const [userName, setUserName] = useState('');
-  const [email, setEmail] = useState('');
-  const [picture, setPicture] = useState('');
 
    const responseFacebook = (res) =>{
-      setIsLoggedIn(true);
-      setUserId(res.id);
-      setUserName(res.name);
-      setEmail(res.email);
-      setPicture(res.picture);
+      props.checkUserLogin({
+        isLoggedIn : true,
+        userId: res.id,
+        userName: res.name,
+        email: res.email,
+        picture : res.picture
+      });
+
       cookies.set('userId', res.id, { path: '/' })
+
+      fetch('http://localhost:3000/users/',{
+        method: 'POST',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+        "userId": res.id,
+        "username": res.name,
+        "email": res.email,
+        "picture": res.picture.data.url
+        })
+      })
     }
-      const componentClicked = () =>{
+   
+    const componentClicked = () =>{
         console.log('clicked');
       }
       
-      props.checkUserLogin({
-        isLoggedIn,
-        userId,
-        userName,
-        email,
-        picture
-      });
-
       return(
         <FacebookLogin
         appId="527833861398176"

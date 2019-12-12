@@ -7,24 +7,34 @@ const WriteComment = React.memo(props =>{
     const [isloggedIn, setIsloggedIn] = useState(false);
     const [userName, setUserName] = useState('');
     const [showLogin, setshowLogin] = useState(false);
+    const [msgData, setMsgData] = useState([]);
     const cookies = new Cookies();
+    let reply = 0;
 
     const checkLogin = (isLogin) =>{
         setIsloggedIn(isLogin.isLoggedIn)
         setUserName(isLogin.name)
-        console.log(isLogin)
      }
-     console.log(userName, 'username')
 
     const showLoginForm = () => {
         setshowLogin(true);
     }
+    
+    useEffect(()=>{
+        fetch('http://localhost:3000/comments',)
+        .then(res => res.json())
+        .then(data => setMsgData(data))
+    },[])
+
+    //msgData.map(item => reply += item.reply.length)
+    
+    //console.log(msgData[0].userId)
 
     return (
         <Fragment>
             <div className="cm_write-comment">
                 <div className="cm_comment-count">
-                    <div className="cm_count-item">All Comments <span>(50)</span></div>
+                    <div className="cm_count-item">All Comments <span>({msgData.length})</span></div>
                     <div className="cm_count-item">Replies <span>(12)</span></div>
                 </div>
                 <div className="cm_typeIn">
