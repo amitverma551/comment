@@ -175,7 +175,10 @@
         }
         .cm_list-footer .cm_reply-icon svg{
             height: 18px;
-            width: 18px;
+            width: 18px; 
+        }
+        .cm_list-footer .cm_reply-icon, .cm_list-footer .cm_reply-icon svg{
+            pointer-events: none;
         }
         .cm_list-footer .cm_thumbUp-icon svg .st0{
             fill:#378300;
@@ -415,7 +418,6 @@
             max-width: 100%;
             width: 100%;
             margin-top: 10px;
-            display: none;
         }
         .cm_dummy-input{
             border: 1px solid #d1d1d1;
@@ -506,7 +508,7 @@
             text-align: center;
             margin-top: 12px;
         }
-        .has-comments .cm_be-first-line, .has-comments .cm_post{
+        .has-comments .cm_post, .cm_list-inner .cm_login-comment{
             display: none;
         }
         .has-comments .cm_click-expend-inner, .cm_login-comment{

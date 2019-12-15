@@ -15,6 +15,32 @@ const UserInputComment = props =>{
          setErrorMsgState('Please Login First to Post your Message');
          props.showLoginForm();
       }
+      if(cookies.get('userId') != undefined){
+          fetch('http://localhost:3000/comments',{
+             method: 'POST',
+             headers: {
+               'Accept': 'application/json',
+               'Content-Type': 'application/json'
+             },
+             body: JSON.stringify({
+                "time" : new Date(),
+                "userDetail": [
+                  {
+                    "userId": cookies.get('userId'),
+                    "username": props.userName,
+                    "email": "amitverma551@gmail.com"
+                  }
+               ],
+               "body":inputMsgState,
+               "like": 0,
+               "dislike": 0,
+               "reply": []
+             })
+          }).then(()=>{
+            props.msgPost();
+            setInputMsgState('')
+          })
+      }
    }
 
    const inputHandle = (e) => {
@@ -39,7 +65,7 @@ const UserInputComment = props =>{
        {
           (props.showLoginMsg || cookies.get('userId') != undefined) ? (<div className="cm_Uname-InComment">
                <div className="cm_user_name">
-                  <div className="cm_first-letter" style={{backgroundColor: "#ffe1b7"}}>s
+                  <div className="cm_first-letter" style={{backgroundColor: "#ffe1b7"}}>{props.userName && props.userName[0]}
                </div>
                <div className="cm_full-name">{props.userName && props.userName}</div>
             </div>
